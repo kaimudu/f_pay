@@ -56,7 +56,9 @@ document.addEventListener('message',
 
         app_data = e.data
         app_data = JSON.parse(app_data)
-
+        
+        // document.getElementById("pay1").innerHTML = `Pay ₹${app_data.unit_price}` ;
+        
         car = app_data.car;
         fuel = app_data.fuel;
         lat_lng = app_data.lat_lng;
@@ -89,7 +91,7 @@ function validation1(e) {
 $('#mode_payment1').on('change', function () { // jquery function to show select box if user chose debit card
     $chosen_debit_card = this.value;
     if ($chosen_debit_card === 'debit-card') {
-        $("#debit-card-bank-section").css('display', 'block');
+        $("#debit_card_bank").css('display', 'block');
         $('select#debit_card_bank').attr('required', 1);
     }
     else {
