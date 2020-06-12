@@ -53,8 +53,13 @@
   <p id="pay1">
 
   </p>
-  <select name="mode_payment" class="select  form-control" id="mode_payment1" required="" autocomplete="random" 
-  style="width: 100%; 
+  <input type="text" class="coupon-input" id="coupon_input" placeholder="Promo Code/ Referral Code"
+    autocomplete="random" style="width: 100%; 
+                                     padding: 8px 8px;
+                                     border: 1px solid #6b6b66;
+                                     border-radius: 5 px;
+                                    ">
+  <select name="mode_payment" class="select  form-control" id="mode_payment1" required="" autocomplete="random" style="width: 100%; 
         padding: 8px 8px;
         border: 1px solid #6b6b66;
         border-radius: 0px;">
@@ -73,7 +78,7 @@
     <option value="card" class="options">Canara Bank</option>
     <option value="One-Time-Payment" class="options">Other</option>
   </select>
-  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation1(event)">AGREE AND
+  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE AND
     PAY</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
