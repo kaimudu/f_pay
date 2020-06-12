@@ -49,22 +49,43 @@ running_kms = '10000';
 fuel_type = 'Petrol';
 vehicle_registration = 'vehicle_registration';
 
+let app_data
+// let app_data = {
+//     "address": "remo",
+//     "car": " Chevrolet Beat",
+//     "city": "2143/B, 80 Feet Rd, HAL 3rd Stage, Kodihalli, Bengaluru, Karnataka 560008, India",
+//     "coupon_input": null,
+//     "email": "remo@mail.com",
+//     "fuel": "petrol",
+//     "fuel_type": "",
+//     "lat_lng": "12.9653506,77.64930989999999",
+//     "model": "",
+//     "name": "remo",
+//     "phone": "7736718617",
+//     "plan": "premium",
+//     "plan_id": "plan_AV9yNWiIvICRgX",
+//     "product_title": " Chevrolet Beat Petrol Premium",
+//     "product_variation_id": "c7ee1556-99ca-4874-8543-a5ce59012068",
+//     "running_kms": "0 - 20,000 Kms",
+//     "uid": 1297,
+//     "unit_price": "1",
+//     "vehicle_registration": "KL 10 AV 1000",
+// }
 
-let app_data;
 document.addEventListener('message',
     function (e) {
 
         app_data = e.data
         app_data = JSON.parse(app_data)
-        
+
         // document.getElementById("pay1").innerHTML = `Pay ₹${app_data.unit_price}` ;
-        
+
         car = app_data.car;
         fuel = app_data.fuel;
         lat_lng = app_data.lat_lng;
         city = app_data.city
         uid = app_data.uid
-        coupon_input = app_data.coupon_input;
+        // coupon_input = app_data.coupon_input;
         unit_price = app_data.unit_price;
         product_variation_id = app_data.product_variation_id;
         plan_id = app_data.plan_id;
@@ -83,7 +104,12 @@ document.addEventListener('message',
 
 
 function validation1(e) {
-    window.ReactNativeWebView.postMessage(vehicle_registration)
+    // window.ReactNativeWebView.postMessage(vehicle_registration)
+    coupon_input = document.getElementById('coupon_input').value;
+    if(coupon_input.length===0) { //checking if coupon field is empty
+        console.log('coupon empty');}
+        else
+            alert(coupon_input.length)
 }
 
 
@@ -124,6 +150,8 @@ function validation(e) {
 
         mode_payment = document.getElementById('mode_payment1').value;
         debit_card_bank = document.getElementById('debit_card_bank').value;
+        coupon_input = document.getElementById('coupon_input').value;
+
         if (mode_payment === 'card' || debit_card_bank === 'card') //checking if credit or supported debit
         {
             console.log('card');
@@ -355,7 +383,7 @@ function validation(e) {
 
                                                 .then(function (response) {
 
-                                                    if (coupon_input === null) { //checking if coupon field is empty
+                                                    if(coupon_input.length===0) { //checking if coupon field is empty
                                                         console.log('coupon empty');
 
                                                         //create payment controller
@@ -490,7 +518,7 @@ function validation(e) {
                                                                                 "name": "FirstU Subscriptions",
                                                                                 "handler": function (response) {
                                                                                     payment_id = response.razorpay_payment_id;
-                                                                                    fbq('track', 'Purchase', { value: unit_price, currency: 'INR' });
+                                                                                    // fbq('track', 'Purchase', { value: unit_price, currency: 'INR' });
                                                                                     alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
                                                                                     window.ReactNativeWebView.postMessage("Subscribed")
 
@@ -607,8 +635,10 @@ function validation(e) {
                 })
 
                 .then(function (response) {
+                    console.log(response)
+
                     revision_id = response.data.attributes.revision_id;
-                    // console.log(revision_id);
+                    console.log(revision_id);
                     customer_id = response.data.attributes.uuid;
                     // console.log(customer_id);
                     return response;
@@ -654,11 +684,50 @@ function validation(e) {
                         })
 
                         .then(function (response) {
+                            console.log(response)
                             order_item_id = response.data.attributes.uuid;
                             return response;
                         })
 
                         .then(function (response) {
+                            console.log({
+                                "data": {
+                                    "type": "commerce_order--default",
+                                    "attributes": {
+                                        "state": "draft",
+                                        "checkout_step": "complete",
+                                        "order_number": "101",
+                                        "placed": timeStamp
+                                    },
+                                    "relationships": {
+
+                                        "store_id": {
+                                            "data": {
+                                                "type": "commerce_store--online",
+                                                "id": "6d4798d6-eb40-47e4-9ca2-52f3c363436a"
+                                            }
+
+                                        },
+
+                                        "order_items": {
+                                            "data": [{
+                                                "type": "commerce_order_item--default",
+                                                "id": order_item_id
+                                            }]
+                                        },
+
+                                        "billing_profile": [{
+                                            "data": {
+                                                "type": "profile--customer",
+                                                "id": customer_id,
+                                                "meta": {
+                                                    "target_revision_id": revision_id
+                                                }
+                                            }
+                                        }]
+                                    }
+                                }
+                            })
                             fetch('' + base_url + '/jsonapi/commerce_order/default', {
                                 method: 'post',
                                 body: JSON.stringify({
@@ -687,7 +756,7 @@ function validation(e) {
                                                 }]
                                             },
 
-                                            "billing_profile": {
+                                            "billing_profile": [{
                                                 "data": {
                                                     "type": "profile--customer",
                                                     "id": customer_id,
@@ -695,7 +764,7 @@ function validation(e) {
                                                         "target_revision_id": revision_id
                                                     }
                                                 }
-                                            }
+                                            }]
                                         }
                                     }
                                 }),
@@ -711,12 +780,19 @@ function validation(e) {
                                 })
 
                                 .then(function (response) {
+                                    console.log(response)
 
                                     order_id = response.data.attributes.order_id;
                                     order_uuid = response.data.attributes.uuid;
 
-                                    // console.log(order_id);
-
+                                    console.log(order_id);
+                                    console.log({
+                                        "uid": uid,
+                                        "order_id": order_id,
+                                        "payment_type": debit_card_bank,
+                                        "location": city,
+                                        "lat_lng": lat_lng
+                                    })
                                     fetch('' + base_url + '/order/assign', {
 
                                         method: 'post',
@@ -743,8 +819,9 @@ function validation(e) {
                                         })
 
                                         .then(function (response) {
+                                            console.log(response)
 
-                                            if (coupon_input === null) { //checking if coupon field is empty
+                                            if (coupon_input.length===0) { //checking if coupon field is empty
                                                 console.log('coupon empty');
 
                                                 //create payment controller
@@ -768,7 +845,7 @@ function validation(e) {
                                                     "name": "FirstU Subscriptions",
                                                     "handler": function (response) {
                                                         payment_id = response.razorpay_payment_id;
-                                                        fbq('track', 'Purchase', { value: unit_price, currency: 'INR' });
+                                                        // fbq('track', 'Purchase', { value: unit_price, currency: 'INR' });
                                                         alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
                                                         window.ReactNativeWebView.postMessage("Subscribed")
 
@@ -881,7 +958,7 @@ function validation(e) {
                                                                         "name": "FirstU Subscriptions",
                                                                         "handler": function (response) {
                                                                             payment_id = response.razorpay_payment_id;
-                                                                            fbq('track', 'Purchase', { value: order_total_price, currency: 'INR' });
+                                                                            // fbq('track', 'Purchase', { value: order_total_price, currency: 'INR' });
                                                                             alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
                                                                             window.ReactNativeWebView.postMessage("Subscribed")
 
@@ -1171,7 +1248,7 @@ function validation(e) {
                                                     // console.log(order_zero_id);
 
                                                     //coupon checking
-                                                    if (coupon_input === null) { //checking if coupon field is empty
+                                                    if (coupon_input.length===0) { //checking if coupon field is empty
                                                         console.log('coupon empty');
 
                                                         //create payment controller
