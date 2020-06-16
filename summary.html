@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 
@@ -78,8 +80,7 @@
     <option value="card" class="options">Canara Bank</option>
     <option value="One-Time-Payment" class="options">Other</option>
   </select>
-  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE AND
-    PAY</button>
+  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE AND PAY</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -133,6 +134,7 @@
     let lat_lng
     let city
     let uid
+    var user_token
     //dummy_value (data from App come here)
     // car = 'Tata Nexon';
     // fuel = 'Petrol';
@@ -184,6 +186,7 @@
         app_data = JSON.parse(app_data)
         window.ReactNativeWebView.postMessage(app_data)
         // document.getElementById("pay1").innerHTML = `Pay ₹${app_data.unit_price}` ;
+        user_token=app_data.token
         car = app_data.car;
         fuel = app_data.fuel;
         lat_lng = app_data.lat_lng;
@@ -249,6 +252,8 @@
         if (mode_payment === 'card' || debit_card_bank === 'card') //checking if credit or supported debit
         {
           console.log('card');
+                window.ReactNativeWebView.postMessage("Starting")
+
           //clicking on pay now hide button and show loading
           $("#pay-btn-summary").css('display', 'none');
           $("#loader").css('display', 'block');
@@ -333,6 +338,7 @@
                 }),
                 headers: {
                   "Content-Type": "application/json; charset=utf-8",
+                  "Authorization":`Bearer ${user_token}`
 
                 }
               })
@@ -383,7 +389,7 @@
                             }]
                           },
 
-                          "billing_profile": [{
+                          "billing_profile": {
                             "data": {
                               "type": "profile--customer",
                               "id": customer_id,
@@ -391,13 +397,13 @@
                                 "target_revision_id": revision_id
                               }
                             }
-                          }]
+                          }
                         }
                       }
                     }),
                     headers: {
                       "Content-Type": "application/json; charset=utf-8",
-
+                      "Authorization":`Bearer ${user_token}`
                     }
                   })
 
@@ -584,6 +590,7 @@
                                       }),
                                       headers: {
                                         "Content-Type": "application/json; charset=utf-8",
+                                        "Authorization":`Bearer ${user_token}`
 
                                       }
                                     })
@@ -811,6 +818,7 @@
                 }),
                 headers: {
                   "Content-Type": "application/json; charset=utf-8",
+                  "Authorization":`Bearer ${user_token}`
 
                 }
               })
@@ -831,44 +839,7 @@
                 })
 
                 .then(function (response) {
-                  console.log({
-                    "data": {
-                      "type": "commerce_order--default",
-                      "attributes": {
-                        "state": "draft",
-                        "checkout_step": "complete",
-                        "order_number": "101",
-                        "placed": timeStamp
-                      },
-                      "relationships": {
-
-                        "store_id": {
-                          "data": {
-                            "type": "commerce_store--online",
-                            "id": "6d4798d6-eb40-47e4-9ca2-52f3c363436a"
-                          }
-
-                        },
-
-                        "order_items": {
-                          "data": [{
-                            "type": "commerce_order_item--default",
-                            "id": order_item_id
-                          }]
-                        },
-
-                        "billing_profile": [{
-                          "data": {
-                            "type": "profile--customer",
-                            "id": customer_id,
-                            "meta": {
-                              "target_revision_id": revision_id
-                            }
-                          }
-                        }]
-                      }
-                    }
-                  })
+                 
 
                   fetch('' + base_url + '/jsonapi/commerce_order/default', {
                     method: 'post',
@@ -898,7 +869,7 @@
                             }]
                           },
 
-                          "billing_profile": [{
+                          "billing_profile": {
                             "data": {
                               "type": "profile--customer",
                               "id": customer_id,
@@ -906,13 +877,13 @@
                                 "target_revision_id": revision_id
                               }
                             }
-                          }]
+                          }
                         }
                       }
                     }),
                     headers: {
                       "Content-Type": "application/json; charset=utf-8",
-
+                      "Authorization":`Bearer ${user_token}`
                     }
                   })
 
@@ -1067,6 +1038,7 @@
                                   }),
                                   headers: {
                                     "Content-Type": "application/json; charset=utf-8",
+                                    "Authorization":`Bearer ${user_token}`
 
                                   }
                                 })
@@ -1272,6 +1244,7 @@
                 }),
                 headers: {
                   "Content-Type": "application/json; charset=utf-8",
+                  "Authorization":`Bearer ${user_token}`
 
                 }
               })
@@ -1331,7 +1304,7 @@
                     }),
                     headers: {
                       "Content-Type": "application/json; charset=utf-8",
-
+                      "Authorization":`Bearer ${user_token}`
                     }
                   })
 
@@ -1516,7 +1489,7 @@
                                       }),
                                       headers: {
                                         "Content-Type": "application/json; charset=utf-8",
-
+                                        "Authorization":`Bearer ${user_token}`
                                       }
                                     })
                                       .then(function (response) {
@@ -1589,7 +1562,7 @@
                                           };
 
                                           console.log(options, "options")
-                                          
+
                                           window.ReactNativeWebView.postMessage("loader-stop")
 
                                           var rzp1 = new Razorpay(options);
