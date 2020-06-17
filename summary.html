@@ -61,31 +61,31 @@
                                     ">
   <div class="row">
     <div class="col-md-12 col-12">
-     <div class="form-group select-container mob-margin"> 
-      <select name="mode_payment" class="select  form-control" id="mode_payment1" required="" autocomplete="random">
-        <option disabled selected value=""> Mode Of Payment </option>
-        <option value="card" class="options">Credit Card</option>
-        <option value="debit-card" class="options">Debit Card</option>
-        <option value="emandate" class="options">E-Nach/E-Mandate</option>
-      </select> 
-    </div>
+      <div class="form-group select-container mob-margin">
+        <select name="mode_payment" class="select  form-control" id="mode_payment1" required="" autocomplete="random">
+          <option disabled selected value=""> Mode Of Payment </option>
+          <option value="card" class="options">Credit Card</option>
+          <option value="debit-card" class="options">Debit Card</option>
+          <option value="emandate" class="options">E-Nach/E-Mandate</option>
+        </select>
+      </div>
     </div>
   </div>
   <div class="row" id="debit-card-bank-section" style="display: none;">
     <div class="col-md-12 col-12">
-     <div class="form-group select-container mob-margin"> 
-      <select name="debit_card_bank" class="select  form-control" id="debit_card_bank" autocomplete="random">
-        <option disabled selected value=""> Choose Debit Card Bank </option>
-        <option value="card" class="options">ICICI Bank</option>
-        <option value="card" class="options"> Citi Bank</option>
-        <option value="card" class="options">Kotak Mahindra Bank</option>
-        <option value="card" class="options">Canara Bank</option>
-        <option value="One-Time-Payment" class="options">Other</option>
-      </select> 
-    </div>
+      <div class="form-group select-container mob-margin">
+        <select name="debit_card_bank" class="select  form-control" id="debit_card_bank" autocomplete="random">
+          <option disabled selected value=""> Choose Debit Card Bank </option>
+          <option value="card" class="options">ICICI Bank</option>
+          <option value="card" class="options"> Citi Bank</option>
+          <option value="card" class="options">Kotak Mahindra Bank</option>
+          <option value="card" class="options">Canara Bank</option>
+          <option value="One-Time-Payment" class="options">Other</option>
+        </select>
+      </div>
     </div>
   </div>
-  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE 14 AND
+  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE 15 AND
     PAY</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
@@ -100,16 +100,16 @@
   </script> -->
 
   <script type="text/javascript">
-    $('#mode_payment1').on('change', function() { // jquery function to show select box if user chose debit card
+    $('#mode_payment1').on('change', function () { // jquery function to show select box if user chose debit card
       $chosen_debit_card = this.value;
-      if($chosen_debit_card === 'debit-card'){
-        $("#debit-card-bank-section").css('display','block');
-        $('select#debit_card_bank').attr('required',1);
+      if ($chosen_debit_card === 'debit-card') {
+        $("#debit-card-bank-section").css('display', 'block');
+        $('select#debit_card_bank').attr('required', 1);
       }
-      else{
-         $("#debit-card-bank-section").css('display','none');
+      else {
+        $("#debit-card-bank-section").css('display', 'none');
       }
-});
+    });
 
 
     var unit_price;
@@ -268,19 +268,14 @@
         window.ReactNativeWebView.postMessage("loader")
 
         // e.preventDefault();
-        
+
 
         mode_payment = document.getElementById('mode_payment1').value;
-        alert('mode_payment')
-        alert(mode_payment)
+
 
         debit_card_bank = document.getElementById('debit_card_bank').value;
-        alert("debit_card_bank")
 
-        alert(debit_card_bank)
-        alert(debit_card_bank==='One-Time-Payment')
         coupon_input = document.getElementById('coupon_input').value;
-        alert(mode_payment === 'card' || debit_card_bank === 'card')
         if (mode_payment === 'card' || debit_card_bank === 'card') //checking if credit or supported debit
         {
           console.log('card');
@@ -757,7 +752,30 @@
 
 
           //create billing profile
-
+          window.ReactNativeWebView.postMessage(JSON.stringify({
+              "data": {
+                "type": "profile--customer",
+                "attributes": {
+                  "status": true,
+                  "is_default": true,
+                  "field_billing_address": address,
+                  "field_current_running_kms": running_kms,
+                  "field_email": email,
+                  "field_model_and_make": model,
+                  "field_name": name,
+                  "field_phone": phone,
+                  "field_vehicle_registration_numbe": vehicle_registration
+                },
+                "relationships": {
+                  "type": {
+                    "data": {
+                      "type": "profile_type--profile_type",
+                      "id": "aaf4e4cb-ccc5-4abf-a820-142017c40246"
+                    }
+                  }
+                }
+              }
+            }))
           fetch('' + base_url + '/jsonapi/profile/customer', {
             method: 'post',
             body: JSON.stringify({
@@ -786,7 +804,7 @@
             }),
             headers: {
               "Content-Type": "application/json; charset=utf-8",
-
+              "Authorization": `Bearer ${user_token}`
             }
           })
 
@@ -798,7 +816,7 @@
               console.log('billing profile created');
               return response.json();
             })
-            .catch((err)=>{
+            .catch((err) => {
               alert('billing profile not created')
               window.ReactNativeWebView.postMessage(JSON.stringify(err))
             })
