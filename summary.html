@@ -65,7 +65,7 @@
         border-radius: 0px;">
     <option disabled selected value=""> Mode Of Payments </option>
     <option value="card" class="options">Credit Card</option>
-    <option value="debit-card" class="options">Debit Card</option>
+    <option value="card" class="options">Debit Card</option>
     <option value="emandate" class="options">E-Nach/E-Mandate</option>
   </select>
 
@@ -78,7 +78,7 @@
     <option value="card" class="options">Canara Bank</option>
     <option value="One-Time-Payment" class="options">Other</option>
   </select>
-  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE 6 AND
+  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE 7 AND
     PAY</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
@@ -781,7 +781,7 @@
 
 
             .then(function (response) {
-
+              alert('billing profile created')
               console.log('billing profile created');
               return response.json();
             })
@@ -855,6 +855,7 @@
 
 
                 .then(function (response) {
+                  alert('order item created')
 
                   console.log('order item created');
                   return response.json();
@@ -919,6 +920,8 @@
 
                     .then(function (response) {
                       console.log('order created');
+                      alert('order created')
+
                       return response.json();
                     })
 
@@ -970,7 +973,7 @@
 
                           if (coupon_input.length === 0) { //checking if coupon field is empty
                             console.log('coupon empty');
-
+                            alert('coupon empty')
                             //create payment controller
 
                             fetch('' + base_url + '/order/payment_create', {
