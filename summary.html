@@ -85,7 +85,7 @@
     </div>
     </div>
   </div>
-  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE 13 AND
+  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE 14 AND
     PAY</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
@@ -750,6 +750,7 @@
 
         else if (debit_card_bank === 'One-Time-Payment') {
           alert('ENTER One-Time-Payment')
+          window.ReactNativeWebView.postMessage('ENTER One-Time-Payment')
 
           $("#pay-btn-summary").css('display', 'none');
           $("#loader").css('display', 'block');
@@ -792,8 +793,14 @@
 
             .then(function (response) {
               alert('billing profile created')
+              window.ReactNativeWebView.postMessage(JSON.stringify(response))
+
               console.log('billing profile created');
               return response.json();
+            })
+            .catch((err)=>{
+              alert('billing profile not created')
+              window.ReactNativeWebView.postMessage(JSON.stringify(err))
             })
 
             .then(function (response) {
