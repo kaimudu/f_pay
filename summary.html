@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 
@@ -59,34 +61,26 @@
                                      border: 1px solid #6b6b66;
                                      border-radius: 5 px;
                                     ">
-  <div class="row">
-    <div class="col-md-12 col-12">
-      <div class="form-group select-container mob-margin">
-        <select name="mode_payment" class="select  form-control" id="mode_payment1" required="" autocomplete="random">
-          <option disabled selected value=""> Mode Of Payment </option>
-          <option value="card" class="options">Credit Card</option>
-          <option value="debit-card" class="options">Debit Card</option>
-          <option value="emandate" class="options">E-Nach/E-Mandate</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <div class="row" id="debit-card-bank-section" style="display: none;">
-    <div class="col-md-12 col-12">
-      <div class="form-group select-container mob-margin">
-        <select name="debit_card_bank" class="select  form-control" id="debit_card_bank" autocomplete="random">
-          <option disabled selected value=""> Choose Debit Card Bank </option>
-          <option value="card" class="options">ICICI Bank</option>
-          <option value="card" class="options"> Citi Bank</option>
-          <option value="card" class="options">Kotak Mahindra Bank</option>
-          <option value="card" class="options">Canara Bank</option>
-          <option value="One-Time-Payment" class="options">Other</option>
-        </select>
-      </div>
-    </div>
-  </div>
-  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE 16 AND
-    PAY</button>
+  <select name="mode_payment" class="select  form-control" id="mode_payment1" required="" autocomplete="random" style="width: 100%; 
+        padding: 8px 8px;
+        border: 1px solid #6b6b66;
+        border-radius: 0px;">
+    <option disabled selected value=""> Mode Of Payments </option>
+    <option value="card" class="options">Credit Card</option>
+    <option value="debit-card" class="options">Debit Card</option>
+    <option value="emandate" class="options">E-Nach/E-Mandate</option>
+  </select>
+
+  <select name="debit_card_bank" class="select  form-control debit-card-bank-section" id="debit_card_bank"
+    style="display: none;" autocomplete="random">
+    <option disabled selected value=""> Choose Debit Card Bank </option>
+    <option value="card" class="options">ICICI Bank</option>
+    <option value="card" class="options"> Citi Bank</option>
+    <option value="card" class="options">Kotak Mahindra Bank</option>
+    <option value="card" class="options">Canara Bank</option>
+    <option value="One-Time-Payment" class="options">Other</option>
+  </select>
+  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE 22 AND PAY 2</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -103,7 +97,7 @@
     $('#mode_payment1').on('change', function () { // jquery function to show select box if user chose debit card
       $chosen_debit_card = this.value;
       if ($chosen_debit_card === 'debit-card') {
-        $("#debit-card-bank-section").css('display', 'block');
+        $("#debit_card_bank").css('display', 'block');
         $('select#debit_card_bank').attr('required', 1);
       }
       else {
@@ -192,7 +186,7 @@
         app_data = JSON.parse(app_data)
         window.ReactNativeWebView.postMessage(app_data)
         // document.getElementById("pay1").innerHTML = `Pay ₹${app_data.unit_price}` ;
-        user_token = app_data.token
+        user_token=app_data.token
         car = app_data.car;
         fuel = app_data.fuel;
         lat_lng = app_data.lat_lng;
@@ -217,31 +211,14 @@
 
 
     function validation1(e) {
-      window.ReactNativeWebView.postMessage("loader")
-
-      var options = {
-        "key": razorpay_key,
-        "name": "FirstU Subscriptions",
-        "handler": function (response) {
-          payment_id = response.razorpay_payment_id;
-          // fbq('track', 'Purchase', { value: unit_price, currency: 'INR' });
-          alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
-
-        },
-        "notes": {
-          "order_id": 'order_id',
-          "payment_type": 'card'
-
-        },
-      };
-      console.log(options, "options")
-        // console.log(response)
-        //              window.ReactNativeWebView.postMessage(response)
-        ; // here subscription id is printing
-      window.ReactNativeWebView.postMessage("loader-stop")
-
-      var rzp1 = new Razorpay(options);
-      rzp1.open();
+      alert("coupon_input")
+      // window.ReactNativeWebView.postMessage("Subscribed")
+      coupon_input = document.getElementById('coupon_input').value;
+      if (coupon_input.length === 0) { //checking if coupon field is empty
+        alert('coupon empty');
+      }
+      else
+        alert(coupon_input.length)
     }
 
 
@@ -249,7 +226,7 @@
       var test;
       window.ReactNativeWebView.postMessage(test)
 
-      if ($('#debit-card-bank-section').css("display") === "block") {
+      if ($('#debit-card-bank-section').css("display") == "block") {
         if ($('#debit_card_bank').val() != null) {
           test = true;
 
@@ -267,20 +244,16 @@
 
         window.ReactNativeWebView.postMessage("loader")
 
-        // e.preventDefault();
-
+        e.preventDefault();
 
         mode_payment = document.getElementById('mode_payment1').value;
-
-
         debit_card_bank = document.getElementById('debit_card_bank').value;
-
         coupon_input = document.getElementById('coupon_input').value;
+
         if (mode_payment === 'card' || debit_card_bank === 'card') //checking if credit or supported debit
         {
           console.log('card');
-          alert("card")
-          window.ReactNativeWebView.postMessage("Starting")
+                window.ReactNativeWebView.postMessage("Starting")
 
           //clicking on pay now hide button and show loading
           $("#pay-btn-summary").css('display', 'none');
@@ -323,7 +296,6 @@
 
 
             .then(function (response) {
-              alert("billing profile created")
 
               console.log('billing profile created');
               return response.json();
@@ -366,14 +338,14 @@
                   }
                 }),
                 headers: {
-                  "Content-Type": "application/json; charset=utf-8"
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Authorization":`Bearer ${user_token}`
 
                 }
               })
 
 
                 .then(function (response) {
-                  alert("order item created")
 
                   console.log('order item created');
 
@@ -432,13 +404,11 @@
                     }),
                     headers: {
                       "Content-Type": "application/json; charset=utf-8",
-                      "Authorization": `Bearer ${user_token}`
+                      "Authorization":`Bearer ${user_token}`
                     }
                   })
 
                     .then(function (response) {
-                      alert("order created")
-
                       console.log('order created');
                       return response.json();
                     })
@@ -477,7 +447,6 @@
 
 
                         .then(function (response) {
-                          alert("order assigned to user")
 
                           console.log('order assigned to user');
                           return response.text();
@@ -506,7 +475,6 @@
 
 
                             .then(function (response) {
-                              alert("order subscribed")
 
                               console.log('order subscribed');
                               return response.json();
@@ -526,7 +494,6 @@
 
                               if (coupon_input.length === 0) { //checking if coupon field is empty
                                 console.log('coupon empty');
-                                alert("coupon empty")
 
                                 //create payment controller
 
@@ -566,7 +533,7 @@
                                   // console.log(response)
                                   //              window.ReactNativeWebView.postMessage(response)
                                   ; // here subscription id is printing
-                                window.ReactNativeWebView.postMessage("loader-stop")
+                                  window.ReactNativeWebView.postMessage("loader-stop")
 
                                 var rzp1 = new Razorpay(options);
                                 rzp1.open();
@@ -624,7 +591,7 @@
                                       }),
                                       headers: {
                                         "Content-Type": "application/json; charset=utf-8",
-                                        "Authorization": `Bearer ${user_token}`
+                                        "Authorization":`Bearer ${user_token}`
 
                                       }
                                     })
@@ -686,7 +653,7 @@
                                             // console.log(response)
                                             //              window.ReactNativeWebView.postMessage(response)
                                             ; // here subscription id is printing
-                                          window.ReactNativeWebView.postMessage("loader-stop")
+                                            window.ReactNativeWebView.postMessage("loader-stop")
 
                                           var rzp1 = new Razorpay(options);
                                           rzp1.open();
@@ -744,38 +711,13 @@
 
 
         else if (debit_card_bank === 'One-Time-Payment') {
-          alert('ENTER One-Time-Payment')
-          window.ReactNativeWebView.postMessage('ENTER One-Time-Payment')
 
           $("#pay-btn-summary").css('display', 'none');
           $("#loader").css('display', 'block');
 
 
           //create billing profile
-          window.ReactNativeWebView.postMessage(JSON.stringify({
-              "data": {
-                "type": "profile--customer",
-                "attributes": {
-                  "status": true,
-                  "is_default": true,
-                  "field_billing_address": address,
-                  "field_current_running_kms": running_kms,
-                  "field_email": email,
-                  "field_model_and_make": model,
-                  "field_name": name,
-                  "field_phone": phone,
-                  "field_vehicle_registration_numbe": vehicle_registration
-                },
-                "relationships": {
-                  "type": {
-                    "data": {
-                      "type": "profile_type--profile_type",
-                      "id": "aaf4e4cb-ccc5-4abf-a820-142017c40246"
-                    }
-                  }
-                }
-              }
-            }))
+
           fetch('' + base_url + '/jsonapi/profile/customer', {
             method: 'post',
             body: JSON.stringify({
@@ -803,22 +745,16 @@
               }
             }),
             headers: {
-              "Content-type": "application/vnd.api+json",
-              "Accept":"application/vnd.api+json"
+              "Content-Type": "application/json; charset=utf-8",
+
             }
           })
 
 
             .then(function (response) {
-              alert('billing profile created')
-              window.ReactNativeWebView.postMessage(JSON.stringify(response.json()))
 
               console.log('billing profile created');
               return response.json();
-            })
-            .catch((err) => {
-              alert('billing profile not created')
-              window.ReactNativeWebView.postMessage(JSON.stringify(err))
             })
 
             .then(function (response) {
@@ -883,14 +819,13 @@
                 }),
                 headers: {
                   "Content-Type": "application/json; charset=utf-8",
-                  "Authorization": `Bearer ${user_token}`
+                  "Authorization":`Bearer ${user_token}`
 
                 }
               })
 
 
                 .then(function (response) {
-                  alert('order item created')
 
                   console.log('order item created');
                   return response.json();
@@ -905,7 +840,7 @@
                 })
 
                 .then(function (response) {
-
+                 
 
                   fetch('' + base_url + '/jsonapi/commerce_order/default', {
                     method: 'post',
@@ -949,14 +884,12 @@
                     }),
                     headers: {
                       "Content-Type": "application/json; charset=utf-8",
-                      "Authorization": `Bearer ${user_token}`
+                      "Authorization":`Bearer ${user_token}`
                     }
                   })
 
                     .then(function (response) {
                       console.log('order created');
-                      alert('order created')
-
                       return response.json();
                     })
 
@@ -1008,7 +941,7 @@
 
                           if (coupon_input.length === 0) { //checking if coupon field is empty
                             console.log('coupon empty');
-                            alert('coupon empty')
+
                             //create payment controller
 
                             fetch('' + base_url + '/order/payment_create', {
@@ -1048,7 +981,7 @@
                               // console.log(response)
                               //              window.ReactNativeWebView.postMessage(response)
                               ; // here subscription id is printing
-                            window.ReactNativeWebView.postMessage("loader-stop")
+                              window.ReactNativeWebView.postMessage("loader-stop")
 
                             var rzp1 = new Razorpay(options);
                             rzp1.open();
@@ -1106,7 +1039,7 @@
                                   }),
                                   headers: {
                                     "Content-Type": "application/json; charset=utf-8",
-                                    "Authorization": `Bearer ${user_token}`
+                                    "Authorization":`Bearer ${user_token}`
 
                                   }
                                 })
@@ -1170,7 +1103,7 @@
                                         // console.log(response)
                                         //              window.ReactNativeWebView.postMessage(response)
                                         ; // here subscription id is printing
-                                      window.ReactNativeWebView.postMessage("loader-stop")
+                                        window.ReactNativeWebView.postMessage("loader-stop")
 
                                       var rzp1 = new Razorpay(options);
                                       rzp1.open();
@@ -1312,7 +1245,7 @@
                 }),
                 headers: {
                   "Content-Type": "application/json; charset=utf-8",
-                  "Authorization": `Bearer ${user_token}`
+                  "Authorization":`Bearer ${user_token}`
 
                 }
               })
@@ -1372,7 +1305,7 @@
                     }),
                     headers: {
                       "Content-Type": "application/json; charset=utf-8",
-                      "Authorization": `Bearer ${user_token}`
+                      "Authorization":`Bearer ${user_token}`
                     }
                   })
 
@@ -1557,7 +1490,7 @@
                                       }),
                                       headers: {
                                         "Content-Type": "application/json; charset=utf-8",
-                                        "Authorization": `Bearer ${user_token}`
+                                        "Authorization":`Bearer ${user_token}`
                                       }
                                     })
                                       .then(function (response) {
