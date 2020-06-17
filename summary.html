@@ -811,7 +811,7 @@
 
             .then(function (response) {
               alert('billing profile created')
-              window.ReactNativeWebView.postMessage(JSON.stringify(response))
+              window.ReactNativeWebView.postMessage(JSON.stringify(response.json()))
 
               console.log('billing profile created');
               return response.json();
