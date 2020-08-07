@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -78,8 +79,8 @@
     <option value="card" class="options">Canara Bank</option>
     <option value="One-Time-Payment" class="options">Other</option>
   </select>
-  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation1(event)">AGREE AND
-    PAY 6</button>
+  <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE AND
+    PAY (Beta)</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -126,13 +127,14 @@
     var coupon_input;
     var subscription_id;
     var timeStamp = Math.floor(Date.now() / 1000);
-    let razorpay_key = 'rzp_test_ICLCQ9JCM0e15U'
-    var base_url = 'http://dev.firstuv2.tridz.in';
+    let razorpay_key = 'rzp_test_JQdh0B8bYh0D8O'
+    var base_url = 'https://dev.firstuv2.tridz.in';
     var car
     var fuel
     let lat_lng
     let city
     let uid
+    var user_id
     var user_token
     //dummy_value (data from App come here)
     // car = 'Tata Nexon';
@@ -155,7 +157,7 @@
     // fuel_type = 'Petrol';
     // vehicle_registration = 'vehicle_registration';
 
-    let app_data
+    // let app_data
     // let app_data = {
     //     "address": "remo",
     //     "car": " Chevrolet Beat",
@@ -191,6 +193,7 @@
         lat_lng = app_data.lat_lng;
         city = app_data.city
         uid = app_data.uid
+        user_id = app_data.user_id
         // coupon_input = app_data.coupon_input;
         unit_price = app_data.unit_price;
         product_variation_id = app_data.product_variation_id;
@@ -210,50 +213,14 @@
 
 
     function validation1(e) {
-      fetch('http://dev.firstuv2.tridz.in/jsonapi/profile/customer', {
-        method: 'POST',
-        body: JSON.stringify({
-          "data": {
-            "type": "profile--customer",
-            "attributes": {
-              "status": true,
-              "is_default": true,
-              "field_billing_address": address,
-              "field_current_running_kms": running_kms,
-              "field_email": email,
-              "field_model_and_make": model,
-              "field_name": name,
-              "field_phone": phone,
-              "field_vehicle_registration_numbe": vehicle_registration
-            },
-            "relationships": {
-              "type": {
-                "data": {
-                  "type": "profile_type--profile_type",
-                  "id": "aaf4e4cb-ccc5-4abf-a820-142017c40246"
-                }
-              }
-            }
-          }
-        }),
-        headers: {
-          "Content-Type": "application/vnd.api+json",
-          "Accept": "application/vnd.api+json"
-        }
-      })
-
-
-        .then(function (response) {
-          window.ReactNativeWebView.postMessage("billing profile created")
-          alert('billing profile created');
-          window.ReactNativeWebView.postMessage(response.json())
-          alert(response.json())
-          return response.json();
-        })
-        .catch(function (error) {
-          alert('not created');
-          alert(error)
-        });
+      alert("coupon_input")
+      // window.ReactNativeWebView.postMessage("Subscribed")
+      coupon_input = document.getElementById('coupon_input').value;
+      if (coupon_input.length === 0) { //checking if coupon field is empty
+        alert('coupon empty');
+      }
+      else
+        alert(coupon_input.length)
     }
 
 
@@ -319,13 +286,19 @@
                       "type": "profile_type--profile_type",
                       "id": "aaf4e4cb-ccc5-4abf-a820-142017c40246"
                     }
+                  },
+                  "uid": {
+                    "data": {
+                      "type": "user--user",
+                      "id": user_id
+                    }
                   }
                 }
               }
             }),
             headers: {
               "Content-Type": "application/json; charset=utf-8",
-
+              "Authorization": `Bearer ${user_token}`
             }
           })
 
@@ -475,7 +448,8 @@
                         }),
                         headers: {
                           "Content-Type": "application/json; charset=utf-8",
-                          "Accept": "text/html; charset=UTF-8"
+                          "Accept": "text/html; charset=UTF-8",
+                          "Authorization": `Bearer ${user_token}`
 
                         }
                       })
@@ -502,7 +476,8 @@
                               "total_count": "12"
                             }),
                             headers: {
-                              "Content-Type": "application/json; charset=utf-8"
+                              "Content-Type": "application/json; charset=utf-8",
+                              "Authorization": `Bearer ${user_token}`
 
 
                             }
@@ -586,6 +561,7 @@
                                   method: 'get',
                                   headers: {
                                     "Content-Type": "application/json; charset=utf-8",
+                                    "Authorization": `Bearer ${user_token}`
 
                                   }
                                 })
@@ -658,13 +634,11 @@
                                         })
 
                                         if (order_coupon_length === 0) {//case when coupon not attach to order
-                                          alert('coupon invalid');
                                           document.getElementById('coupon_input').value = '';
                                           $("#pay-btn-summary").css('display', 'block');
                                           $("#loader").css('display', 'none');
                                         }
                                         else {
-                                          alert('coupon attached Successfully !');
                                           var options = {
                                             "key": razorpay_key,
                                             "subscription_id": subscription_id,
@@ -746,14 +720,13 @@
 
 
         else if (debit_card_bank === 'One-Time-Payment') {
-          window.ReactNativeWebView.postMessage("One-Time-Payment")
           $("#pay-btn-summary").css('display', 'none');
           $("#loader").css('display', 'block');
 
 
           //create billing profile
 
-          fetch(base_url + '/jsonapi/profile/customer', {
+          fetch('' + base_url + '/jsonapi/profile/customer', {
             method: 'post',
             body: JSON.stringify({
               "data": {
@@ -775,22 +748,31 @@
                       "type": "profile_type--profile_type",
                       "id": "aaf4e4cb-ccc5-4abf-a820-142017c40246"
                     }
+                  },
+                  "uid": {
+                    "data": {
+                      "type": "user--user",
+                      "id": user_id
+                    }
                   }
                 }
               }
             }),
             headers: {
-              "Content-Type": "application/json; charset=utf-8",
+              "Content-Type": "application/vnd.api+json",
+              "Accept": "application/vnd.api+json",
+              "Authorization": `Bearer ${user_token}`
 
             }
           })
 
 
             .then(function (response) {
-              window.ReactNativeWebView.postMessage("billing profile created")
               console.log('billing profile created');
+              window.ReactNativeWebView.postMessage('billing profile created')
               return response.json();
             })
+
             .then(function (response) {
               console.log(response)
               //              window.ReactNativeWebView.postMessage(response)
@@ -804,28 +786,7 @@
             })
 
             .then(function (response) {
-              console.log({
-                "data": {
-                  "type": "commerce_order_item--default",
-                  "attributes": {
-                    "quantity": "1.00",
-                    "title": product_title,
-                    "unit_price": {
-                      "number": unit_price,
-                      "currency_code": "INR"
-                    }
-                  },
-                  "relationships": {
-                    "purchased_entity": {
-                      "data": {
-                        "type": "commerce_product_variation--car",
-                        "id": product_variation_id
-                      }
-                    }
-                  }
 
-                }
-              })
 
               fetch('' + base_url + '/jsonapi/commerce_order_item/default', {
                 method: 'post',
@@ -852,15 +813,16 @@
                   }
                 }),
                 headers: {
-                  "Content-Type": "application/json; charset=utf-8",
+                  "Content-Type": "application/vnd.api+json",
+                  "Accept": "application/vnd.api+json",
                   "Authorization": `Bearer ${user_token}`
-
                 }
               })
 
 
                 .then(function (response) {
-                  window.ReactNativeWebView.postMessage("order item created")
+                  window.ReactNativeWebView.postMessage('order item created')
+
                   console.log('order item created');
                   return response.json();
                 })
@@ -917,13 +879,15 @@
                       }
                     }),
                     headers: {
-                      "Content-Type": "application/json; charset=utf-8",
+                      "Content-Type": "application/vnd.api+json",
+                      "Accept": "application/vnd.api+json",
                       "Authorization": `Bearer ${user_token}`
                     }
                   })
 
                     .then(function (response) {
-                      window.ReactNativeWebView.postMessage("order created")
+                      window.ReactNativeWebView.postMessage('order  created')
+
                       console.log('order created');
                       return response.json();
                     })
@@ -956,13 +920,15 @@
                         }),
                         headers: {
                           "Content-Type": "application/json; charset=utf-8",
-                          "Accept": "text/html; charset=UTF-8"
+                          "Accept": "text/html; charset=UTF-8",
+                          "Authorization": `Bearer ${user_token}`
 
                         }
                       })
 
 
                         .then(function (response) {
+                          window.ReactNativeWebView.postMessage('orderassigned to user')
 
                           console.log('order assigned to user');
                           return response.text();
@@ -976,6 +942,7 @@
 
                           if (coupon_input.length === 0) { //checking if coupon field is empty
                             console.log('coupon empty');
+                            window.ReactNativeWebView.postMessage('coupon empty')
 
                             //create payment controller
 
@@ -985,7 +952,8 @@
                                 "order_id": order_id
                               }),
                               headers: {
-                                "Content-Type": "application/json; charset=utf-8"
+                                "Content-Type": "application/json; charset=utf-8",
+                                "Authorization": `Bearer ${user_token}`
 
                               }
                             })
@@ -1034,6 +1002,7 @@
                               method: 'get',
                               headers: {
                                 "Content-Type": "application/json; charset=utf-8",
+                                "Authorization": `Bearer ${user_token}`
 
                               }
                             })
@@ -1227,12 +1196,19 @@
                       "type": "profile_type--profile_type",
                       "id": "aaf4e4cb-ccc5-4abf-a820-142017c40246"
                     }
+                  },
+                  "uid": {
+                    "data": {
+                      "type": "user--user",
+                      "id": user_id
+                    }
                   }
                 }
               }
             }),
             headers: {
               "Content-Type": "application/json; charset=utf-8",
+              "Authorization": `Bearer ${user_token}`
 
             }
           })
@@ -1370,7 +1346,8 @@
                         ),
                         headers: {
                           "Content-Type": "application/json; charset=utf-8",
-                          "Accept": "text/html; charset=UTF-8"
+                          "Accept": "text/html; charset=UTF-8",
+                          "Authorization": `Bearer ${user_token}`
 
                         }
                       })
@@ -1398,6 +1375,7 @@
                             }),
                             headers: {
                               "Content-Type": "application/json; charset=utf-8",
+                              "Authorization": `Bearer ${user_token}`
 
                             }
                           })
@@ -1485,6 +1463,7 @@
                                   method: 'get',
                                   headers: {
                                     "Content-Type": "application/json; charset=utf-8",
+                                    "Authorization": `Bearer ${user_token}`
 
                                   }
                                 })
@@ -1549,7 +1528,8 @@
                                             "order_id": order_id
                                           }),
                                           headers: {
-                                            "Content-Type": "application/json; charset=utf-8"
+                                            "Content-Type": "application/json; charset=utf-8",
+                                            "Authorization": `Bearer ${user_token}`
 
 
                                           }
