@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -80,7 +79,7 @@
     <option value="One-Time-Payment" class="options">Other</option>
   </select>
   <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE AND
-    PAY (Beta)</button>
+    PAY (Beta 2)</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -158,63 +157,86 @@
     // vehicle_registration = 'vehicle_registration';
 
     // let app_data
-    // let app_data = {
-    //     "address": "remo",
-    //     "car": " Chevrolet Beat",
-    //     "city": "2143/B, 80 Feet Rd, HAL 3rd Stage, Kodihalli, Bengaluru, Karnataka 560008, India",
-    //     "coupon_input": null,
-    //     "email": "remo@mail.com",
-    //     "fuel": "petrol",
-    //     "fuel_type": "",
-    //     "lat_lng": "12.9653506,77.64930989999999",
-    //     "model": "",
-    //     "name": "remo",
-    //     "phone": "7736718617",
-    //     "plan": "premium",
-    //     "plan_id": "plan_AV9yNWiIvICRgX",
-    //     "product_title": " Chevrolet Beat Petrol Premium",
-    //     "product_variation_id": "c7ee1556-99ca-4874-8543-a5ce59012068",
-    //     "running_kms": "0 - 20,000 Kms",
-    //     "uid": 1297,
-    //     "unit_price": "1",
-    //     "vehicle_registration": "KL 10 AV 1000",
-    // }
+    let app_data = {
+      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijc5MGRiZWQwZDk2NDc1N2RiOTA4NTRiNTY4MTk3MWMzZGQ1ZDk1YjI0OGZlN2E4ZjQ5MDQxNjkxMDU5ZjUyODVjMmE3OTY2N2E2MDdiYWI0In0.eyJhdWQiOiJkYTY1ZDlmZC0xMDhhLTRiMmEtOWFkZC1mZjJlMjQ4OTk5YjkiLCJqdGkiOiI3OTBkYmVkMGQ5NjQ3NTdkYjkwODU0YjU2ODE5NzFjM2RkNWQ5NWIyNDhmZTdhOGY0OTA0MTY5MTA1OWY1Mjg1YzJhNzk2NjdhNjA3YmFiNCIsImlhdCI6MTU5NjgwNzgyNCwibmJmIjoxNTk2ODA3ODI0LCJleHAiOjE2MDY4MDc4MjQsInN1YiI6IjEiLCJzY29wZXMiOlsiYXV0aGVudGljYXRlZCIsImNvbnN1bWVyIiwic2VydmljZV9hZHZpc29yIiwic2l0ZV8iLCJ1c2VyIl19.HW2DP-CGSx1QSVH-L7ti3WBjnIHA7mkXegivrJ2WZ20cvPagQZMgQYe-UM-IVFkIt0bpVdJ4AW5QXW5tEmJz1HELF8kwVjqDiXKsggwmDcfmow8BxoO-mZWAOHxV2KpmDeM81i_wjNWJxj1E4FDhZhdNTe1XcrDzbd1Ys_k8zQRKArzLUefIFEsGKaKr403wcvmrxl55dmPzls2srFKxrcANXfItOGVFVghwYqac4vOlIBDN738Swc_BZ42BLtRWk183s4Gj_hSYZqbpBecXGPmEXXhSbLtjtctLelpPKJhTV5mS8L_-sJZ12PEfrxAs7-hxC6V2mlFSkHwOJ4EtjQ",
+      "address": "remo",
+      "car": " Chevrolet Beat",
+      "city": "2143/B, 80 Feet Rd, HAL 3rd Stage, Kodihalli, Bengaluru, Karnataka 560008, India",
+      "coupon_input": null,
+      "email": "remo@mail.com",
+      "fuel": "petrol",
+      "fuel_type": "",
+      "lat_lng": "12.9653506,77.64930989999999",
+      "model": "",
+      "name": "remo",
+      "phone": "7878787878",
+      "plan": "premium",
+      "plan_id": "plan_AV9yNWiIvICRgX",
+      "product_title": " Chevrolet Beat Petrol Premium",
+      "product_variation_id": "c7ee1556-99ca-4874-8543-a5ce59012068",
+      "running_kms": "0 - 20,000 Kms",
+      "uid": 1340,
+      "unit_price": "1",
+      "vehicle_registration": "KL 10 AV 2000",
+    }
+
+    user_token = app_data.token
+    car = app_data.car;
+    fuel = app_data.fuel;
+    lat_lng = app_data.lat_lng;
+    city = app_data.city
+    uid = app_data.uid
+    user_id = app_data.user_id
+    // coupon_input = app_data.coupon_input;
+    unit_price = app_data.unit_price;
+    product_variation_id = app_data.product_variation_id;
+    plan_id = app_data.plan_id;
+    product_title = app_data.product_title;
+    name = app_data.name;
+    phone = app_data.phone;
+    email = app_data.email;
+    city = app_data.city;
+    address = app_data.address;
+    model = app_data.model;
+    running_kms = app_data.running_kms;
+    fuel_type = app_data.fuel_type;
+    vehicle_registration = app_data.vehicle_registration;
 
 
-    document.addEventListener('message',
-      function (e) {
-        app_data = e.data
-        app_data = JSON.parse(app_data)
-        window.ReactNativeWebView.postMessage(app_data)
-        // document.getElementById("pay1").innerHTML = `Pay ₹${app_data.unit_price}` ;
-        user_token = app_data.token
-        car = app_data.car;
-        fuel = app_data.fuel;
-        lat_lng = app_data.lat_lng;
-        city = app_data.city
-        uid = app_data.uid
-        user_id = app_data.user_id
-        // coupon_input = app_data.coupon_input;
-        unit_price = app_data.unit_price;
-        product_variation_id = app_data.product_variation_id;
-        plan_id = app_data.plan_id;
-        product_title = app_data.product_title;
-        name = app_data.name;
-        phone = app_data.phone;
-        email = app_data.email;
-        city = app_data.city;
-        address = app_data.address;
-        model = app_data.model;
-        running_kms = app_data.running_kms;
-        fuel_type = app_data.fuel_type;
-        vehicle_registration = app_data.vehicle_registration;
-      }
-    )
+    // document.addEventListener('message',
+    //   function (e) {
+    //     app_data = e.data
+    //     app_data = JSON.parse(app_data)
+    //     //window.ReactNativeWebView.postMessage(app_data)
+    //     // document.getElementById("pay1").innerHTML = `Pay ₹${app_data.unit_price}` ;
+    //     user_token = app_data.token
+    //     car = app_data.car;
+    //     fuel = app_data.fuel;
+    //     lat_lng = app_data.lat_lng;
+    //     city = app_data.city
+    //     uid = app_data.uid
+    //     user_id = app_data.user_id
+    //     // coupon_input = app_data.coupon_input;
+    //     unit_price = app_data.unit_price;
+    //     product_variation_id = app_data.product_variation_id;
+    //     plan_id = app_data.plan_id;
+    //     product_title = app_data.product_title;
+    //     name = app_data.name;
+    //     phone = app_data.phone;
+    //     email = app_data.email;
+    //     city = app_data.city;
+    //     address = app_data.address;
+    //     model = app_data.model;
+    //     running_kms = app_data.running_kms;
+    //     fuel_type = app_data.fuel_type;
+    //     vehicle_registration = app_data.vehicle_registration;
+    //   }
+    // )
 
 
     function validation1(e) {
       alert("coupon_input")
-      // window.ReactNativeWebView.postMessage("Subscribed")
+      // //window.ReactNativeWebView.postMessage("Subscribed")
       coupon_input = document.getElementById('coupon_input').value;
       if (coupon_input.length === 0) { //checking if coupon field is empty
         alert('coupon empty');
@@ -226,7 +248,7 @@
 
     function validation(e) {
       var test;
-      window.ReactNativeWebView.postMessage(test)
+      //window.ReactNativeWebView.postMessage(test)
 
       if ($('#debit-card-bank-section').css("display") == "block") {
         if ($('#debit_card_bank').val() != null) {
@@ -244,7 +266,7 @@
 
       if (test === true) {
 
-        window.ReactNativeWebView.postMessage("loader")
+        //window.ReactNativeWebView.postMessage("loader")
 
         e.preventDefault();
 
@@ -255,7 +277,7 @@
         if (mode_payment === 'card' || debit_card_bank === 'card') //checking if credit or supported debit
         {
           console.log('card');
-          window.ReactNativeWebView.postMessage("Starting")
+          //window.ReactNativeWebView.postMessage("Starting")
 
           //clicking on pay now hide button and show loading
           $("#pay-btn-summary").css('display', 'none');
@@ -311,7 +333,7 @@
 
             .then(function (response) {
               console.log(response)
-              //              window.ReactNativeWebView.postMessage(response)
+              //              //window.ReactNativeWebView.postMessage(response)
               revision_id = response.data.attributes.revision_id;
               // console.log(revision_id);
               customer_id = response.data.attributes.uuid;
@@ -362,7 +384,7 @@
 
                 .then(function (response) {
                   console.log(response)
-                  //              window.ReactNativeWebView.postMessage(response)
+                  //              //window.ReactNativeWebView.postMessage(response)
 
 
                   order_item_id = response.data.attributes.uuid;
@@ -423,7 +445,7 @@
 
                     .then(function (response) {
                       console.log(response)
-                      //              window.ReactNativeWebView.postMessage(response)
+                      //              //window.ReactNativeWebView.postMessage(response)
 
 
                       order_id = response.data.attributes.order_id;
@@ -465,7 +487,7 @@
 
                         .then(function (response) {
                           console.log(response)
-                          //              window.ReactNativeWebView.postMessage(response)
+                          //              //window.ReactNativeWebView.postMessage(response)
 
 
 
@@ -492,7 +514,7 @@
 
                             .then(function (response) {
                               console.log(response)
-                              //              window.ReactNativeWebView.postMessage(response)
+                              //              //window.ReactNativeWebView.postMessage(response)
 
 
                               subscription_id = response.id;
@@ -527,7 +549,7 @@
                                     payment_id = response.razorpay_payment_id;
                                     // fbq('track', 'Purchase', { value: unit_price, currency: 'INR' });
                                     alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
-                                    window.ReactNativeWebView.postMessage("Subscribed")
+                                    //window.ReactNativeWebView.postMessage("Subscribed")
 
                                   },
                                   "notes": {
@@ -541,9 +563,9 @@
 
 
                                   // console.log(response)
-                                  //              window.ReactNativeWebView.postMessage(response)
+                                  //              //window.ReactNativeWebView.postMessage(response)
                                   ; // here subscription id is printing
-                                window.ReactNativeWebView.postMessage("loader-stop")
+                                //window.ReactNativeWebView.postMessage("loader-stop")
 
                                 var rzp1 = new Razorpay(options);
                                 rzp1.open();
@@ -612,7 +634,7 @@
 
                                       .then(function (response) {
                                         console.log(response)
-                                          //              window.ReactNativeWebView.postMessage(response)
+                                          //              //window.ReactNativeWebView.postMessage(response)
                                           ;
                                         order_total_price = response.data.attributes.total_price.number;
                                         order_coupon_length = response.data.relationships.coupons.data.length;
@@ -647,7 +669,7 @@
                                               payment_id = response.razorpay_payment_id;
                                               // fbq('track', 'Purchase', { value: unit_price, currency: 'INR' });
                                               alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
-                                              window.ReactNativeWebView.postMessage("Subscribed")
+                                              //window.ReactNativeWebView.postMessage("Subscribed")
 
                                             },
                                             "notes": {
@@ -660,9 +682,9 @@
                                           console.log(options, "options")
 
                                             // console.log(response)
-                                            //              window.ReactNativeWebView.postMessage(response)
+                                            //              //window.ReactNativeWebView.postMessage(response)
                                             ; // here subscription id is printing
-                                          window.ReactNativeWebView.postMessage("loader-stop")
+                                          //window.ReactNativeWebView.postMessage("loader-stop")
 
                                           var rzp1 = new Razorpay(options);
                                           rzp1.open();
@@ -769,13 +791,13 @@
 
             .then(function (response) {
               console.log('billing profile created');
-              window.ReactNativeWebView.postMessage('billing profile created')
+              //window.ReactNativeWebView.postMessage('billing profile created')
               return response.json();
             })
 
             .then(function (response) {
               console.log(response)
-              //              window.ReactNativeWebView.postMessage(response)
+              //              //window.ReactNativeWebView.postMessage(response)
 
 
               revision_id = response.data.attributes.revision_id;
@@ -821,7 +843,7 @@
 
 
                 .then(function (response) {
-                  window.ReactNativeWebView.postMessage('order item created')
+                  //window.ReactNativeWebView.postMessage('order item created')
 
                   console.log('order item created');
                   return response.json();
@@ -829,7 +851,7 @@
 
                 .then(function (response) {
                   console.log(response)
-                  //              window.ReactNativeWebView.postMessage(response)
+                  //              //window.ReactNativeWebView.postMessage(response)
 
                   order_item_id = response.data.attributes.uuid;
                   return response;
@@ -886,7 +908,7 @@
                   })
 
                     .then(function (response) {
-                      window.ReactNativeWebView.postMessage('order  created')
+                      //window.ReactNativeWebView.postMessage('order  created')
 
                       console.log('order created');
                       return response.json();
@@ -894,7 +916,7 @@
 
                     .then(function (response) {
                       console.log(response)
-                      //              window.ReactNativeWebView.postMessage(response)
+                      //              //window.ReactNativeWebView.postMessage(response)
 
 
                       order_id = response.data.attributes.order_id;
@@ -928,7 +950,7 @@
 
 
                         .then(function (response) {
-                          window.ReactNativeWebView.postMessage('orderassigned to user')
+                          //window.ReactNativeWebView.postMessage('orderassigned to user')
 
                           console.log('order assigned to user');
                           return response.text();
@@ -937,12 +959,12 @@
 
                         .then(function (response) {
                           console.log(response)
-                          //              window.ReactNativeWebView.postMessage(response)
+                          //              //window.ReactNativeWebView.postMessage(response)
 
 
                           if (coupon_input.length === 0) { //checking if coupon field is empty
                             console.log('coupon empty');
-                            window.ReactNativeWebView.postMessage('coupon empty')
+                            //window.ReactNativeWebView.postMessage('coupon empty')
 
                             //create payment controller
 
@@ -968,7 +990,7 @@
                                 payment_id = response.razorpay_payment_id;
                                 // fbq('track', 'Purchase', { value: unit_price, currency: 'INR' });
                                 alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
-                                window.ReactNativeWebView.postMessage("Subscribed")
+                                //window.ReactNativeWebView.postMessage("Subscribed")
 
                               },
                               "notes": {
@@ -982,9 +1004,9 @@
 
 
                               // console.log(response)
-                              //              window.ReactNativeWebView.postMessage(response)
+                              //              //window.ReactNativeWebView.postMessage(response)
                               ; // here subscription id is printing
-                            window.ReactNativeWebView.postMessage("loader-stop")
+                            //window.ReactNativeWebView.postMessage("loader-stop")
 
                             var rzp1 = new Razorpay(options);
                             rzp1.open();
@@ -1053,7 +1075,7 @@
 
                                   .then(function (response) {
                                     console.log(response)
-                                      //              window.ReactNativeWebView.postMessage(response)
+                                      //              //window.ReactNativeWebView.postMessage(response)
                                       ;
                                     order_total_price = response.data.attributes.total_price.number;
                                     order_coupon_length = response.data.relationships.coupons.data.length;
@@ -1090,7 +1112,7 @@
                                           payment_id = response.razorpay_payment_id;
                                           // fbq('track', 'Purchase', { value: order_total_price, currency: 'INR' });
                                           alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
-                                          window.ReactNativeWebView.postMessage("Subscribed")
+                                          //window.ReactNativeWebView.postMessage("Subscribed")
 
                                         },
                                         "notes": {
@@ -1105,9 +1127,9 @@
 
 
                                         // console.log(response)
-                                        //              window.ReactNativeWebView.postMessage(response)
+                                        //              //window.ReactNativeWebView.postMessage(response)
                                         ; // here subscription id is printing
-                                      window.ReactNativeWebView.postMessage("loader-stop")
+                                      //window.ReactNativeWebView.postMessage("loader-stop")
 
                                       var rzp1 = new Razorpay(options);
                                       rzp1.open();
@@ -1432,7 +1454,7 @@
                                     pass_emandate_response(response);
 
                                     alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
-                                    window.ReactNativeWebView.postMessage("Subscribed")
+                                    //window.ReactNativeWebView.postMessage("Subscribed")
 
                                   },
                                   "notes": {
@@ -1446,7 +1468,7 @@
 
                                 console.log(options, "options")
 
-                                window.ReactNativeWebView.postMessage("loader-stop")
+                                //window.ReactNativeWebView.postMessage("loader-stop")
 
                                 var rzp1 = new Razorpay(options);
                                 rzp1.open();
@@ -1513,7 +1535,7 @@
 
                                       .then(function (response) {
                                         console.log(response)
-                                          //              window.ReactNativeWebView.postMessage(response)
+                                          //              //window.ReactNativeWebView.postMessage(response)
                                           ;
                                         order_total_price = response.data.attributes.total_price.number;
                                         order_coupon_length = response.data.relationships.coupons.data.length;
@@ -1564,7 +1586,7 @@
                                               pass_emandate_response(response);
 
                                               alert('Thanks for subscribing, welcome to the FirstU family. You will receive the welcome mail and message shortly. We are here to help if you need it. Call us at +91-9686993660 or write to us at support@firstu.in');
-                                              window.ReactNativeWebView.postMessage("Subscribed")
+                                              //window.ReactNativeWebView.postMessage("Subscribed")
 
 
                                             },
@@ -1579,7 +1601,7 @@
 
                                           console.log(options, "options")
 
-                                          window.ReactNativeWebView.postMessage("loader-stop")
+                                          //window.ReactNativeWebView.postMessage("loader-stop")
 
                                           var rzp1 = new Razorpay(options);
                                           rzp1.open();
