@@ -79,7 +79,7 @@
     <option value="One-Time-Payment" class="options">Other</option>
   </select>
   <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE AND
-    PAY (Beta 2)</button>
+    PAY (BETA 22)</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -127,7 +127,7 @@
     var subscription_id;
     var timeStamp = Math.floor(Date.now() / 1000);
     let razorpay_key = 'rzp_test_JQdh0B8bYh0D8O'
-    var base_url = 'https://dev.firstuv2.tridz.in';
+    var base_url = 'https://fu-api.firstu.in';
     var car
     var fuel
     let lat_lng
@@ -135,6 +135,54 @@
     let uid
     var user_id
     var user_token
+    let app_data={
+  "address": "",
+  "car": "Chevrolet Cruze",
+  "city": "2143/B, 80 Feet Rd, HAL 3rd Stage, Kodihalli, Bengaluru, Karnataka 560008, India",
+  "coupon_input": null,
+  "email": "mudu@mail.com",
+  "fuel": "diesel",
+  "fuel_type": "",
+  "lat_lng": "12.9653506,77.64930989999999",
+  "model": "Chevrolet Cruze",
+  "name": "mudu23",
+  "phone": "9605247078",
+  "plan": "premium",
+  "plan_id": "plan_DlgVN82HxVpdnu",
+  "product_title": "Chevrolet Sail Cruze Premium",
+  "product_variation_id": "76771f4f-7aaa-4cf6-9ada-ee0191d7e958",
+  "running_kms":  {
+    "kms": "0 - 20,000 Kms",
+    "number": "9605247078",
+  },
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjZjZmUzNjRiZWRhZGFhMzU4MGU0ZTk3NTRjNjY5NDc4MThmZWEzOWE4NGY1NGNkNWExM2E0NWU4NjI5YTVhN2E3NmE2ZDY1ZjI4NmJlMWQzIn0.eyJhdWQiOiJkYTY1ZDlmZC0xMDhhLTRiMmEtOWFkZC1mZjJlMjQ4OTk5YjkiLCJqdGkiOiI2Y2ZlMzY0YmVkYWRhYTM1ODBlNGU5NzU0YzY2OTQ3ODE4ZmVhMzlhODRmNTRjZDVhMTNhNDVlODYyOWE1YTdhNzZhNmQ2NWYyODZiZTFkMyIsImlhdCI6MTU5NzIxNzU3OSwibmJmIjoxNTk3MjE3NTc5LCJleHAiOjE2MDcyMTc1NzksInN1YiI6IjEyODMiLCJzY29wZXMiOlsiYXV0aGVudGljYXRlZCIsImNvbnN1bWVyIiwic2VydmljZV9hZHZpc29yIiwic2l0ZV8iLCJ1c2VyIl19.VuhuStvkQ-u6wDJy_sJvYCo6Qtc63aOWjLhXhKHjN0lq7l0wUpVXW4RyOFsM96ND7jmhx8J_MdCJLxs70GRz6qDs5A16EiFSVTDYMpZh1E9O8cAy2UulC0Rrg5d4lKIIXeKHsPOYuorGonRVvKL-uRyMyRjwBUNBLMkqRDbbzP1_Ns6RLQIb-xJmYzcbM-04r2ite9Q3r1xu5VB0fce1E4eI4fiKC2NeCud22aEQQk263dpPvJw39Wdh5Cnkuh3R_Y8iTajhpXXIz3xZTv_PujZjRvJzm5DtcTYAOgdxVsOUBHbYMpLqtKBvv1unVj_U3ltFDDhHMHWnQ2rycXxU5g",
+  "uid": 1283,
+  "unit_price": "2000",
+  "user_id": "e98bf8d7-d0c6-404f-bf70-b50a0878570f",
+  "vehicle_registration": "",
+}
+
+user_token = app_data.token
+        car = app_data.car;
+        fuel = app_data.fuel;
+        lat_lng = app_data.lat_lng;
+        city = app_data.city
+        uid = app_data.uid
+        user_id = app_data.user_id
+        // coupon_input = app_data.coupon_input;
+        unit_price = app_data.unit_price;
+        product_variation_id = app_data.product_variation_id;
+        plan_id = app_data.plan_id;
+        product_title = app_data.product_title;
+        name = app_data.name;
+        phone = app_data.phone;
+        email = app_data.email;
+        city = app_data.city;
+        address = app_data.address;
+        model = app_data.model;
+        running_kms = app_data.running_kms.kms;
+        fuel_type = app_data.fuel_type;
+        vehicle_registration = app_data.vehicle_registration;
     //dummy_value (data from App come here)
     // car = 'Tata Nexon';
     // fuel = 'Petrol';
@@ -157,50 +205,27 @@
     // vehicle_registration = 'vehicle_registration';
 
     // let app_data
-    let app_data = {
-      "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6Ijc5MGRiZWQwZDk2NDc1N2RiOTA4NTRiNTY4MTk3MWMzZGQ1ZDk1YjI0OGZlN2E4ZjQ5MDQxNjkxMDU5ZjUyODVjMmE3OTY2N2E2MDdiYWI0In0.eyJhdWQiOiJkYTY1ZDlmZC0xMDhhLTRiMmEtOWFkZC1mZjJlMjQ4OTk5YjkiLCJqdGkiOiI3OTBkYmVkMGQ5NjQ3NTdkYjkwODU0YjU2ODE5NzFjM2RkNWQ5NWIyNDhmZTdhOGY0OTA0MTY5MTA1OWY1Mjg1YzJhNzk2NjdhNjA3YmFiNCIsImlhdCI6MTU5NjgwNzgyNCwibmJmIjoxNTk2ODA3ODI0LCJleHAiOjE2MDY4MDc4MjQsInN1YiI6IjEiLCJzY29wZXMiOlsiYXV0aGVudGljYXRlZCIsImNvbnN1bWVyIiwic2VydmljZV9hZHZpc29yIiwic2l0ZV8iLCJ1c2VyIl19.HW2DP-CGSx1QSVH-L7ti3WBjnIHA7mkXegivrJ2WZ20cvPagQZMgQYe-UM-IVFkIt0bpVdJ4AW5QXW5tEmJz1HELF8kwVjqDiXKsggwmDcfmow8BxoO-mZWAOHxV2KpmDeM81i_wjNWJxj1E4FDhZhdNTe1XcrDzbd1Ys_k8zQRKArzLUefIFEsGKaKr403wcvmrxl55dmPzls2srFKxrcANXfItOGVFVghwYqac4vOlIBDN738Swc_BZ42BLtRWk183s4Gj_hSYZqbpBecXGPmEXXhSbLtjtctLelpPKJhTV5mS8L_-sJZ12PEfrxAs7-hxC6V2mlFSkHwOJ4EtjQ",
-      "address": "remo",
-      "car": " Chevrolet Beat",
-      "city": "2143/B, 80 Feet Rd, HAL 3rd Stage, Kodihalli, Bengaluru, Karnataka 560008, India",
-      "coupon_input": null,
-      "email": "remo@mail.com",
-      "fuel": "petrol",
-      "fuel_type": "",
-      "lat_lng": "12.9653506,77.64930989999999",
-      "model": "",
-      "name": "remo",
-      "phone": "7878787878",
-      "plan": "premium",
-      "plan_id": "plan_AV9yNWiIvICRgX",
-      "product_title": " Chevrolet Beat Petrol Premium",
-      "product_variation_id": "c7ee1556-99ca-4874-8543-a5ce59012068",
-      "running_kms": "0 - 20,000 Kms",
-      "uid": 1340,
-      "unit_price": "1",
-      "vehicle_registration": "KL 10 AV 2000",
-    }
-
-    user_token = app_data.token
-    car = app_data.car;
-    fuel = app_data.fuel;
-    lat_lng = app_data.lat_lng;
-    city = app_data.city
-    uid = app_data.uid
-    user_id = app_data.user_id
-    // coupon_input = app_data.coupon_input;
-    unit_price = app_data.unit_price;
-    product_variation_id = app_data.product_variation_id;
-    plan_id = app_data.plan_id;
-    product_title = app_data.product_title;
-    name = app_data.name;
-    phone = app_data.phone;
-    email = app_data.email;
-    city = app_data.city;
-    address = app_data.address;
-    model = app_data.model;
-    running_kms = app_data.running_kms;
-    fuel_type = app_data.fuel_type;
-    vehicle_registration = app_data.vehicle_registration;
+    // let app_data = {
+    //     "address": "remo",
+    //     "car": " Chevrolet Beat",
+    //     "city": "2143/B, 80 Feet Rd, HAL 3rd Stage, Kodihalli, Bengaluru, Karnataka 560008, India",
+    //     "coupon_input": null,
+    //     "email": "remo@mail.com",
+    //     "fuel": "petrol",
+    //     "fuel_type": "",
+    //     "lat_lng": "12.9653506,77.64930989999999",
+    //     "model": "",
+    //     "name": "remo",
+    //     "phone": "7736718617",
+    //     "plan": "premium",
+    //     "plan_id": "plan_AV9yNWiIvICRgX",
+    //     "product_title": " Chevrolet Beat Petrol Premium",
+    //     "product_variation_id": "c7ee1556-99ca-4874-8543-a5ce59012068",
+    //     "running_kms": "0 - 20,000 Kms",
+    //     "uid": 1297,
+    //     "unit_price": "1",
+    //     "vehicle_registration": "KL 10 AV 1000",
+    // }
 
 
     // document.addEventListener('message',
@@ -227,7 +252,7 @@
     //     city = app_data.city;
     //     address = app_data.address;
     //     model = app_data.model;
-    //     running_kms = app_data.running_kms;
+    //     running_kms = app_data.running_kms.kms;
     //     fuel_type = app_data.fuel_type;
     //     vehicle_registration = app_data.vehicle_registration;
     //   }
@@ -294,13 +319,11 @@
                 "attributes": {
                   "status": true,
                   "is_default": true,
-                  "field_billing_address": address,
                   "field_current_running_kms": running_kms,
                   "field_email": email,
                   "field_model_and_make": model,
                   "field_name": name,
-                  "field_phone": phone,
-                  "field_vehicle_registration_numbe": vehicle_registration
+                  "field_phone": phone
                 },
                 "relationships": {
                   "type": {
@@ -337,6 +360,8 @@
               revision_id = response.data.attributes.revision_id;
               // console.log(revision_id);
               customer_id = response.data.attributes.uuid;
+              //window.ReactNativeWebView.postMessage(customer_id)
+
               // console.log(customer_id);
               return response;
             })
@@ -472,7 +497,6 @@
                           "Content-Type": "application/json; charset=utf-8",
                           "Accept": "text/html; charset=UTF-8",
                           "Authorization": `Bearer ${user_token}`
-
                         }
                       })
 
@@ -515,8 +539,6 @@
                             .then(function (response) {
                               console.log(response)
                               //              //window.ReactNativeWebView.postMessage(response)
-
-
                               subscription_id = response.id;
                               return subscription_id;
                             })
@@ -537,6 +559,25 @@
                                   headers: {
                                     "Content-Type": "application/json; charset=utf-8"
 
+                                  }
+                                })
+
+                                fetch('' + base_url + '/jsonapi/commerce_order/default/' + order_uuid + '', {
+                                  method: 'PATCH',
+                                  body: JSON.stringify({
+                                    "data": {
+                                      "type": "commerce_order--default",
+                                      "id": order_uuid,
+                                      "attributes": {
+                                        "uuid": order_uuid,
+                                        "field_subscription_id": subscription_id,
+                                        "field_subscription_status": true
+                                      }
+                                    }
+                                  }),
+                                  headers: {
+                                    "Content-Type": "application/json; charset=utf-8",
+                                    "Authorization": `Bearer ${user_token}`
                                   }
                                 })
 
@@ -607,6 +648,11 @@
                                         "data": {
                                           "type": "commerce_order--default",
                                           "id": order_uuid,
+                                          "attributes": {
+                                            "uuid": order_uuid,
+                                            "field_subscription_id": subscription_id,
+                                            "field_subscription_status": true
+                                          },
                                           "relationships": {
                                             "coupons": {
                                               "data": [
@@ -756,13 +802,11 @@
                 "attributes": {
                   "status": true,
                   "is_default": true,
-                  "field_billing_address": address,
                   "field_current_running_kms": running_kms,
                   "field_email": email,
                   "field_model_and_make": model,
                   "field_name": name,
-                  "field_phone": phone,
-                  "field_vehicle_registration_numbe": vehicle_registration
+                  "field_phone": phone
                 },
                 "relationships": {
                   "type": {
@@ -803,6 +847,8 @@
               revision_id = response.data.attributes.revision_id;
               console.log(revision_id);
               customer_id = response.data.attributes.uuid;
+              //window.ReactNativeWebView.postMessage(customer_id)
+
               // console.log(customer_id);
               return response;
             })
@@ -921,6 +967,7 @@
 
                       order_id = response.data.attributes.order_id;
                       order_uuid = response.data.attributes.uuid;
+                      //window.ReactNativeWebView.postMessage(order_uuid)
 
                       console.log(order_id);
                       console.log({
@@ -977,6 +1024,24 @@
                                 "Content-Type": "application/json; charset=utf-8",
                                 "Authorization": `Bearer ${user_token}`
 
+                              }
+                            })
+
+                            fetch('' + base_url + '/jsonapi/commerce_order/default/' + order_uuid + '', {
+                              method: 'PATCH',
+                              body: JSON.stringify({
+                                "data": {
+                                  "type": "commerce_order--default",
+                                  "id": order_uuid,
+                                  "attributes": {
+                                    "uuid": order_uuid,
+                                    "field_subscription_status": true
+                                  }
+                                }
+                              }),
+                              headers: {
+                                "Content-Type": "application/json; charset=utf-8",
+                                "Authorization": `Bearer ${user_token}`
                               }
                             })
 
@@ -1041,13 +1106,18 @@
 
                               })
                               .then(function (response) {
-
+                             
                                 fetch('' + base_url + '/jsonapi/commerce_order/default/' + order_uuid + '', {
                                   method: 'PATCH',
                                   body: JSON.stringify({
                                     "data": {
                                       "type": "commerce_order--default",
                                       "id": order_uuid,
+                                      "attributes": {
+                                        "uuid": order_uuid,
+                                        "field_subscription_id": subscription_id,
+                                        "field_subscription_status": true
+                                      },
                                       "relationships": {
                                         "coupons": {
                                           "data": [
@@ -1138,7 +1208,6 @@
                                       $("#loader").css('display', 'none');
                                     }
                                   })
-
                               })
                               .catch(function (error) {
                                 //create payment controller 
@@ -1204,13 +1273,11 @@
                 "attributes": {
                   "status": true,
                   "is_default": true,
-                  "field_billing_address": address,
                   "field_current_running_kms": running_kms,
                   "field_email": email,
                   "field_model_and_make": model,
                   "field_name": name,
-                  "field_phone": phone,
-                  "field_vehicle_registration_numbe": vehicle_registration
+                  "field_phone": phone
                 },
                 "relationships": {
                   "type": {
@@ -1246,6 +1313,8 @@
               revision_id = response.data.attributes.revision_id;
               // console.log(revision_id);
               customer_id = response.data.attributes.uuid;
+              //window.ReactNativeWebView.postMessage(customer_id)
+
               // console.log(customer_id);
               return response;
             })
@@ -1509,6 +1578,10 @@
                                         "data": {
                                           "type": "commerce_order--default",
                                           "id": order_uuid,
+                                      "attributes": {
+                                        "uuid": order_uuid,
+                                        "field_subscription_status": true
+                                      },
                                           "relationships": {
                                             "coupons": {
                                               "data": [
