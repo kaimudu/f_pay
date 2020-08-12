@@ -79,7 +79,7 @@
     <option value="One-Time-Payment" class="options">Other</option>
   </select>
   <button name="" id="pay-btn-summary" class="agree-btn" type="submit" onclick="validation(event)">AGREE AND
-    PAY (BETA 22)</button>
+    PAY (BETA 33)</button>
 
   <!-- <script type="text/javascript" src="https://s3.ap-south-1.amazonaws.com/cdn.firstu.in/js/jquery1.5.2.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -585,6 +585,7 @@ user_token = app_data.token
                                 var options = {
                                   "key": razorpay_key,
                                   "subscription_id": subscription_id,
+                                  "amount": unit_price + '00', // 2000 paise = INR 20
                                   "name": "FirstU Subscriptions",
                                   "handler": function (response) {
                                     payment_id = response.razorpay_payment_id;
@@ -710,6 +711,7 @@ user_token = app_data.token
                                           var options = {
                                             "key": razorpay_key,
                                             "subscription_id": subscription_id,
+                                            "amount": order_total_price + '00', // 2000 paise = INR 20
                                             "name": "FirstU Subscriptions",
                                             "handler": function (response) {
                                               payment_id = response.razorpay_payment_id;
