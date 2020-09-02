@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/kaimudu.github.io/static/css/main.5f361e03.chunk.css",
+    "main.js": "/kaimudu.github.io/static/js/main.498bb22f.chunk.js",
+    "main.js.map": "/kaimudu.github.io/static/js/main.498bb22f.chunk.js.map",
+    "runtime-main.js": "/kaimudu.github.io/static/js/runtime-main.1e9c745a.js",
+    "runtime-main.js.map": "/kaimudu.github.io/static/js/runtime-main.1e9c745a.js.map",
+    "static/js/2.c24a221a.chunk.js": "/kaimudu.github.io/static/js/2.c24a221a.chunk.js",
+    "static/js/2.c24a221a.chunk.js.map": "/kaimudu.github.io/static/js/2.c24a221a.chunk.js.map",
+    "index.html": "/kaimudu.github.io/index.html",
+    "precache-manifest.623ecefba4d2ddbb41568dce4d465a8b.js": "/kaimudu.github.io/precache-manifest.623ecefba4d2ddbb41568dce4d465a8b.js",
+    "service-worker.js": "/kaimudu.github.io/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/kaimudu.github.io/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.c24a221a.chunk.js.LICENSE.txt": "/kaimudu.github.io/static/js/2.c24a221a.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/kaimudu.github.io/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1e9c745a.js",
+    "static/js/2.c24a221a.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.498bb22f.chunk.js"
+  ]
+}
